@@ -1,0 +1,232 @@
+:root{
+  --background-color:#2c3e50;
+  --border-color:#7591AD;
+  --color1:red;
+  --color2:orange;
+  --color3:yellow;
+  --color4:green;
+  --color5:Cyan;
+  --color6:blue;
+  --color7:purple;
+  --color8:pink;
+  --wave-color1:#f0932b;
+  --wave-color2:#ffbe76;
+}
+*{
+  margin: 0;
+  padding: 0;
+}
+
+html{
+  font-size: 14px;
+
+  body{
+    width: 100vw;
+    height: 100vh;  
+    background-image: linear-gradient(to left top,#373B44,#4286f4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .container{
+      // 基本框架与body同宽等高
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 2000px;
+      transform-style: preserve-3d;
+
+      // card层仅做为背景使用图片及元素均为内部的元素
+      .card{
+        position: relative;
+        width: 400px;
+        height: 550px;
+        background-color: #000000;
+        border-radius: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #ffffff;
+        //动画相关配置
+        transition: 0.8s;
+        perspective: 2000px;
+        transform-style: preserve-3d;
+
+        .pic{
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          border-radius: 20px;
+          background-image: url(1.jpg);
+          // 背景图，定位居中，
+          //大小采用cover，即高度、宽度两者小的占满，大的部分裁切
+          background-size: cover;
+          background-position: center;
+          overflow: hidden;
+          transition: 1s;
+
+          // 文字部分看不清，我们增加一个黑色半透明层，加深背景色
+          &::before{
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            background-color: rgba(0,0,0,.35);
+            transition: 1s;
+          }
+        }
+
+        h2,h3,h4{
+          position: absolute;
+          top: 100px;
+          color: #ffffff;
+          text-transform: uppercase;
+          transition: 0.5s;
+        }
+        h2{
+          font-size: 30px;
+          margin-top: 0px;
+        }
+        h3{
+          font-size: 20px;
+          margin-top: 50px;
+        }
+        h4{
+          font-size: 30px;
+          margin-top: 300px;
+          opacity: 0.7;
+        }
+      }
+
+      &.active .card{
+        // 实现x轴旋转实现平铺样式，
+        //实现Y轴平移让动画不至于n那么生硬，增加滑动效果
+        transform: rotateX(60deg) translateY(150px);
+        box-shadow: 0 50px 50px 0 rgba(0,0,0,.5);
+      }
+
+      &.active .pic{
+        // 让背景图沿Z轴上移10px，与card分离。看起来有厚度
+        transform: translateZ(10px);
+      }
+
+      &.active .pic::before{
+        background-color: rgba(0,0,0,0.6);
+      }
+
+      &.active h2{
+        opacity: 0;
+        transform: translateZ(40px) translateY(-80px);
+      }
+      &.active h2{
+        opacity: 0;
+        transform: translateZ(40px) translateY(-60px);
+      }
+      &.active h4{
+        opacity: 1;
+        transform: translateZ(40px) translateY(40px);
+      }
+
+      //开始制作柱状图
+      .chart{
+        position: absolute;
+        width: 65%;
+        height: 60px;
+        top: 100px;
+        margin-top: 120px;
+        // background-color: var(--color1);
+        //位置要高于或等于背景图的位移
+        transform: translateZ(12px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        perspective:2000px;
+        transform-style: preserve-3d;
+
+        .bar{
+          position: absolute;
+          // 默认状态下为为0
+          width: 0;
+          height: 20px;
+          color: #000000;
+          // margin-right: 20px;
+          background-color: seashell;
+          perspective: 2000px;
+          transform-style: preserve-3d;
+          // 临时旋转查看效果
+          // transform: rotateY(-90deg)  rotateX(-45deg);
+          transition: 1s;
+          
+          text-align: right;
+
+          &:nth-child(1){transform: translateX(-120px) rotateY(-90deg)  rotateX(-45deg) ;}
+          &:nth-child(2){transform: translateX(-80px) rotateY(-90deg)  rotateX(-45deg) ;}
+          &:nth-child(3){transform: translateX(-40px) rotateY(-90deg)  rotateX(-45deg) ;}
+          &:nth-child(4){transform: translateX(0px) rotateY(-90deg)  rotateX(-45deg) ;}
+          &:nth-child(5){transform: translateX(40px) rotateY(-90deg)  rotateX(-45deg) ;}
+          &:nth-child(6){transform: translateX(80px) rotateY(-90deg)  rotateX(-45deg) ;}
+          &:nth-child(7){transform: translateX(120px) rotateY(-90deg)  rotateX(-45deg) ;}
+
+          &::after{
+            position: absolute;
+            content:'';
+            // 默认状态下为为0
+            width: 100%;
+            height: 20px;
+            top:100%;
+            left: 0;
+            background-color: #0a16be;
+            // 开始旋转，以顶部为基点
+            transform-origin: top;
+            // 旋转后暂时看不见了
+            transform: rotateX(-90deg);  
+            opacity: 0;       
+            transition: 1s;
+            
+          }
+
+          &::before{
+            position: absolute;
+            content:'';
+            width: 20px;
+            height: 20px;
+            top:0;
+            left: 100%;
+            background-color: #1aca40;
+            transform-origin: left;
+            // 旋转后也看不见了
+            transform: rotateY(90deg);
+            transition: 1s;
+            
+          }
+
+          span{
+            opacity: 0;
+            padding-right: 10px;
+            font-size: 12px;
+            color: #555555;
+          }
+        }
+        
+      }
+
+      &.active .chart{
+        transform: translateZ(40px);
+      }
+
+      &.active .bar:nth-child(1){width: 200px;}
+      &.active .bar:nth-child(2){width: 100px;}
+      &.active .bar:nth-child(3){width: 150px;}
+      &.active .bar:nth-child(4){width: 240px;}
+      &.active .bar:nth-child(5){width: 70px;}
+      &.active .bar:nth-child(6){width: 70px;}
+      &.active .bar:nth-child(7){width: 100px;}
+
+      &.active .bar::after{opacity: 1;}
+      &.active .bar span{opacity: 1;}
+    }
+  }
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>制作3D统计界面</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- 动画应用部分,card仅做背景使用 -->
+    <div class="card">
+      <!-- 图片 -->
+      <div class="pic"></div>
+      <h2>steps</h2>
+      <h3>this week</h3>
+      <!-- 这里是柱状图 -->
+      <div class="chart">
+        <!-- 以下为7天的步数柱状图文字 -->
+        <div class="bar"><span>20,000</span></div>
+        <div class="bar"><span>10,000</span></div>
+        <div class="bar"><span>15,000</span></div>
+        <div class="bar"><span>24,000</span></div>
+        <div class="bar"><span>7,000</span></div>
+        <div class="bar"><span>7,000</span></div>
+        <div class="bar"><span>10,000</span></div>
+      </div>
+      <h4>14,025</h4>
+    </div>
+  </div>
+  
+  <script>
+    //点击界面时切换样式，通过样式变化实现动画效果
+    let container = document.querySelector('.container');
+    container.addEventListener('click',()=>{
+      // 切换样式，增加或删除active样式，实现动画
+      container.classList.toggle('active')
+    })
+  </script>
+</body>
+</html>
